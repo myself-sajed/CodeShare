@@ -10,11 +10,26 @@ const Login = () => {
     const [username, setUsername] = useState('')
     const navigate = useNavigate()
 
+    const superheroes = [
+        "Batman",
+        "Spider-Man",
+        "Iron Man",
+        "Captain America",
+        "Thor",
+        "Hulk",
+        "Black Panther",
+        "Hulk",
+        "Krrish",
+        "Thanos",
+        "Doctor Strange",
+        "Joker",
+    ];
+
     // Generating Room ID
     function generateRoomId() {
         const ID = uuid()
         setRoomID(ID)
-        setUsername('Shaikh Sajed')
+        setUsername(superheroes[Math.floor(Math.random() * superheroes.length)])
         toast.success('Room ID generated successfully!')
     }
 
