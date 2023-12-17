@@ -1,4 +1,6 @@
 import { io } from 'socket.io-client';
+const link = "https://code-share-red.vercel.app"
+// const link = `${process.env.REACT_APP_BACKEND_URL}`
 
 export const initSocket = async () => {
     const options = {
@@ -7,5 +9,5 @@ export const initSocket = async () => {
         timeout: 10000,
         transports: ['websocket'],
     };
-    return io("https://code-share-red.vercel.app", options);
+    return io(link, options);
 };

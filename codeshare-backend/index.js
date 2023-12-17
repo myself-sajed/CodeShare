@@ -19,14 +19,9 @@ const getAllUsersFromRoom = (roomID) => {
     })
 }
 
-
 app.get('/', (req, res) => {
-    res.send('Welcome to CodeShare | Shaikh Sajed')
+    res.send('Shaikh Sajed')
 })
-
-
-
-
 
 io.on('connection', (socket) => {
     socket.on('join', ({ roomID, username }) => {
@@ -35,9 +30,6 @@ io.on('connection', (socket) => {
         userSocketMap[socket.id] = username;
         socket.join(roomID);
         const allClients = getAllUsersFromRoom(roomID);
-
-        console.log('Clients are :', allClients);
-
 
         allClients.forEach(({ socketID }) => {
             io.to(socketID).emit('joined', {
