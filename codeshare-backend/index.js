@@ -1,10 +1,11 @@
+require('dotenv').config()
 const express = require('express');
 const app = express();
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
-const PORT = 5000;
+const PORT = process.env.PORT || 3333;
 
 // map all the users
 const userSocketMap = {}
@@ -20,8 +21,9 @@ const getAllUsersFromRoom = (roomID) => {
 }
 
 app.get('/', (req, res) => {
-    res.send('Shaikh Sajed')
+    res.send('Welcome to CodeShare by Shaikh Sajed')
 })
+
 
 io.on('connection', (socket) => {
     socket.on('join', ({ roomID, username }) => {
