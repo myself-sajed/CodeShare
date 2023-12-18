@@ -1,6 +1,6 @@
 import { io } from 'socket.io-client';
-// const link = "wss://codeshare-api.onrender.com/"
-const link = `${process.env.REACT_APP_BACKEND_URL}`
+const link = "wss://codeshare-api.onrender.com/"
+// const link = `${process.env.REACT_APP_BACKEND_URL}`
 
 export const initSocket = async () => {
     const options = {
