@@ -1,5 +1,5 @@
 import { io } from 'socket.io-client';
-const link = "https://code-share-red.vercel.app"
+const link = "wss://codeshare-api.onrender.com/"
 // const link = `${process.env.REACT_APP_BACKEND_URL}`
 
 export const initSocket = async () => {
