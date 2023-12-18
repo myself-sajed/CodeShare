@@ -32,3 +32,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@media (max-width: 450px) {
+  .buttons {
+    display:none; /* Replace with your desired styles for screens below 450px */
+  }
+}

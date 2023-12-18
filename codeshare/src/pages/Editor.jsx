@@ -13,7 +13,7 @@ import { initSocket } from '../socket'
 const Editor = () => {
 
     // socket state
-    const [clients, setClients] = useState(null)
+    const [clients, setClients] = useState([])
 
 
     // States
@@ -99,6 +99,8 @@ const Editor = () => {
         toast.success('You left the Room.')
     }
 
+
+
     // Integrating codemirror
     useEffect(() => {
         async function init() {
@@ -177,49 +179,57 @@ const Editor = () => {
 
         <div>
             {/* EDITOR PAGE */}
-            <div className="flex items-start justify-start h-screen">
+            <div className="sm:flex items-start justify-start h-screen">
 
                 {/* LEFT SECTION */}
-                <div className="bg-blue-100 w-72 h-screen p-2">
-                    <div className='relative'>
-                        <img src="/assets/logo.png" draggable="false" className='h-36 mx-auto border-b-2' alt="logo" />
-                        <div className='w-full h-1 bg-blue-600 absolute bottom-5'></div>
-                    </div>
+                <div className="bg-blue-100 sm:w-72 w-full sm:h-screen p-2">
+                    <div className='sm:block flex items-center justify-between sm:border-0 border-b-2 border-b-blue-300 '>
+                        <div className='relative'>
+                            <img src="/assets/logo.png" draggable="false" className='sm:h-36 h-16 sm:mx-auto border-b-2' alt="logo" />
+                            <div className='hidden sm:block w-full h-1 bg-blue-600 absolute bottom-5'></div>
+                        </div>
 
-                    <div className='flex flex-row gap-2 items-center cursor-pointer '>
-                        <Avatar size='40px' name={location.state.username} color='red' className=' rounded-full ' />
-                        <span className='font-bold  text-center text-sm text-ellipsis overflow-hidden'>{location.state.username} (You)</span>
+
+
+                        <div className='flex flex-row gap-2 items-center cursor-pointer '>
+                            <Avatar size='40px' name={location.state.username} color='red' className=' rounded-full ' />
+                            <span className='font-bold  text-center text-sm text-ellipsis overflow-hidden'>{location.state.username} (You)</span>
+                        </div>
+
+                        <div className='sm:hidden buttons'>
+                            <Buttons copyRoomID={copyRoomID} leaveRoom={leaveRoom} />
+                        </div>
+
                     </div>
-                    <p className='mt-3 text-lg'>Other Connected Clients</p>
-                    <div className='flex flex-col h-[430px]'>
+                    <p className='my-3 text-sm sm:text-sm'>Other Connected Coders</p>
+                    <div className='flex flex-col sm:h-[430px]'>
 
                         {/* DISPLAY ALL CONNECTED CLIENTS */}
                         <div className='flex items-start justify-start gap-3 flex-wrap flex-1 overflow-y-scroll change__scrollbar' style={{ alignContent: 'flex-start' }} >
 
-
-
                             {
-                                clients && clients.map((client, index) => {
+                                clients.length > 1 ? clients.map((client, index) => {
 
                                     return (
-                                        client.username !== location.state.username && (<div key={index} className='flex cursor-pointer items-center justify-center flex-col gap-1 h-28 relative border border-blue-400 bg-blue-200 rounded-lg'>
+                                        client.username !== location.state.username && (<div key={index} className='flex cursor-pointer items-center justify-center flex-col gap-1 relative border border-blue-400 bg-blue-200 rounded-lg py-2'>
                                             <p className='text-sm text-green-900 absolute top-[0px] hidden' id={client.socketID}>Typing...</p>
                                             <Avatar size='40px' name={client.username} color='blue' className='rounded-full' />
-                                            <span className='font-bold text-center text-sm w-[100px] text-ellipsis overflow-hidden'>{client.username}</span>
+                                            <span className='font-bold text-center text-xs sm:text-sm w-[100px] text-ellipsis overflow-hidden'>{client.username}</span>
                                         </div>)
                                     )
-                                })
+                                }) : <div className='w-full'>
+                                    <p className="text-center my-5 text-xs text-yellow-600">
+                                        No other connected coders found!
+                                    </p>
+                                </div>
                             }
-
-
 
                         </div>
 
                         {/* OTHER OPTIONS */}
 
-                        <div className='flex flex-col gap-2 mx-5'>
-                            <button className='p-3 rounded-full bg-green-700 text-white ease-in-out duration-300 hover:bg-green-900 mt-5' onClick={copyRoomID}>Copy Room ID</button>
-                            <button className='p-3 rounded-full bg-red-700 mb-5 ease-in-out duration-300 hover:bg-red-900 text-white' onClick={leaveRoom} >Leave Room</button>
+                        <div className="sm:block hidden">
+                            <Buttons copyRoomID={copyRoomID} leaveRoom={leaveRoom} />
                         </div>
                     </div>
                     <div>
@@ -238,3 +248,10 @@ const Editor = () => {
 }
 
 export default Editor
+
+const Buttons = ({ copyRoomID, leaveRoom }) => {
+    return <div className='sm:flex flex-col gap-2 sm:mx-5 block text-sm sm:text-base'>
+        <button className='sm:p-3 p-2 rounded-full mx-1 bg-green-700 text-white ease-in-out duration-300 hover:bg-green-900 mt-5' onClick={copyRoomID}>Copy Room ID</button>
+        <button className='sm:p-3 p-2 mx-1 rounded-full bg-red-700 mb-5 ease-in-out duration-300 hover:bg-red-900 text-white' onClick={leaveRoom} >Leave Room</button>
+    </div>
+}
